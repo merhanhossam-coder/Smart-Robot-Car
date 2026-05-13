@@ -1,0 +1,431 @@
+[
+    {
+        "id": "robot_tab",
+        "type": "tab",
+        "label": "Smart Robot",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "login_btn",
+        "type": "ui_button",
+        "z": "robot_tab",
+        "name": "LOGIN",
+        "group": "ui_group_control",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "LOGIN",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "green",
+        "className": "",
+        "icon": "lock_open",
+        "payload": "admin,123",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 220,
+        "y": 220,
+        "wires": [
+            [
+                "serial_out_robot"
+            ]
+        ]
+    },
+    {
+        "id": "stop_btn",
+        "type": "ui_button",
+        "z": "robot_tab",
+        "name": "STOP",
+        "group": "ui_group_control",
+        "order": 2,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "STOP",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "red",
+        "className": "",
+        "icon": "stop",
+        "payload": "STOP",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 160,
+        "y": 320,
+        "wires": [
+            [
+                "serial_out_robot"
+            ]
+        ]
+    },
+    {
+        "id": "forward_btn",
+        "type": "ui_button",
+        "z": "robot_tab",
+        "name": "FORWARD",
+        "group": "ui_group_control",
+        "order": 3,
+        "width": 6,
+        "height": 1,
+        "label": "FORWARD",
+        "payload": "FORWARD",
+        "payloadType": "str",
+        "x": 170,
+        "y": 380,
+        "wires": [
+            [
+                "serial_out_robot"
+            ]
+        ]
+    },
+    {
+        "id": "left_btn",
+        "type": "ui_button",
+        "z": "robot_tab",
+        "name": "LEFT",
+        "group": "ui_group_control",
+        "order": 4,
+        "width": 3,
+        "height": 1,
+        "label": "LEFT",
+        "payload": "LEFT",
+        "payloadType": "str",
+        "x": 160,
+        "y": 440,
+        "wires": [
+            [
+                "serial_out_robot"
+            ]
+        ]
+    },
+    {
+        "id": "right_btn",
+        "type": "ui_button",
+        "z": "robot_tab",
+        "name": "RIGHT",
+        "group": "ui_group_control",
+        "order": 5,
+        "width": 3,
+        "height": 1,
+        "label": "RIGHT",
+        "payload": "RIGHT",
+        "payloadType": "str",
+        "x": 170,
+        "y": 500,
+        "wires": [
+            [
+                "serial_out_robot"
+            ]
+        ]
+    },
+    {
+        "id": "back_btn",
+        "type": "ui_button",
+        "z": "robot_tab",
+        "name": "BACK",
+        "group": "ui_group_control",
+        "order": 6,
+        "width": 6,
+        "height": 1,
+        "label": "BACK",
+        "payload": "BACK",
+        "payloadType": "str",
+        "x": 160,
+        "y": 560,
+        "wires": [
+            [
+                "serial_out_robot"
+            ]
+        ]
+    },
+    {
+        "id": "auto_btn",
+        "type": "ui_button",
+        "z": "robot_tab",
+        "name": "AUTO",
+        "group": "ui_group_control",
+        "order": 7,
+        "width": 6,
+        "height": 1,
+        "label": "AUTO MODE",
+        "payload": "AUTO",
+        "payloadType": "str",
+        "x": 170,
+        "y": 620,
+        "wires": [
+            [
+                "serial_out_robot"
+            ]
+        ]
+    },
+    {
+        "id": "ui_status_text",
+        "type": "ui_text",
+        "z": "robot_tab",
+        "group": "ui_group_control",
+        "order": 8,
+        "width": 6,
+        "height": 1,
+        "name": "Robot Status",
+        "label": "STATUS",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 470,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "debug_serial",
+        "type": "debug",
+        "z": "robot_tab",
+        "name": "Serial Monitor",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 450,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "serial_in_robot",
+        "type": "serial in",
+        "z": "robot_tab",
+        "name": "ESP32 RX",
+        "serial": "serial_config_robot",
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "debug_serial",
+                "ui_status_text",
+                "1c1525cebeb7cebf"
+            ]
+        ]
+    },
+    {
+        "id": "serial_out_robot",
+        "type": "serial out",
+        "z": "robot_tab",
+        "name": "ESP32 TX",
+        "serial": "serial_config_robot",
+        "x": 920,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "59cce5b8cfb3bf61",
+        "type": "function",
+        "z": "robot_tab",
+        "name": "function 1",
+        "func": "let loggedIn = global.get(\"loggedIn\") || false;\n\nif (!loggedIn) {\n    node.status({\n        fill: \"red\",\n        shape: \"ring\",\n        text: \"Login required\"\n    });\n    return null;\n}\n\nlet threshold = Number(msg.payload);\n\nflow.set(\"threshold\", threshold);\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: \"Threshold = \" + threshold + \"°C\"\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ba5ff038d33e484",
+        "type": "ui_chart",
+        "z": "robot_tab",
+        "name": "Distance Chart",
+        "group": "ui_group_control",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "label": "Distance (cm)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 500,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1c1525cebeb7cebf",
+        "type": "function",
+        "z": "robot_tab",
+        "name": "Convert To Number",
+        "func": "msg.payload = Number(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 60,
+        "wires": [
+            [
+                "4ba5ff038d33e484",
+                "b3e42624c7d3f847"
+            ]
+        ]
+    },
+    {
+        "id": "e90255355b7ba828",
+        "type": "debug",
+        "z": "robot_tab",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "b3e42624c7d3f847",
+        "type": "function",
+        "z": "robot_tab",
+        "name": "Format CSV",
+        "func": "msg.payload = {\n    time: new Date().toLocaleString(),\n    distance: msg.payload\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 20,
+        "wires": [
+            [
+                "d09e29e75bb07ac8"
+            ]
+        ]
+    },
+    {
+        "id": "d09e29e75bb07ac8",
+        "type": "csv",
+        "z": "robot_tab",
+        "name": "",
+        "spec": "rfc",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\r\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 750,
+        "y": 60,
+        "wires": [
+            [
+                "45fa4de9c4694202",
+                "e90255355b7ba828"
+            ]
+        ]
+    },
+    {
+        "id": "45fa4de9c4694202",
+        "type": "file",
+        "z": "robot_tab",
+        "name": "",
+        "filename": "Desktop\\\\robot_data.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 850,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ui_group_control",
+        "type": "ui_group",
+        "name": "Controls",
+        "tab": "ui_tab_robot",
+        "order": 1,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "serial_config_robot",
+        "type": "serial-port",
+        "serialport": "COM10",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "\\n"
+    },
+    {
+        "id": "ui_tab_robot",
+        "type": "ui_tab",
+        "name": "Robot Control",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "335e858aad7c8c2d",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6",
+            "node-red-node-serialport": "2.0.3"
+        }
+    }
+]

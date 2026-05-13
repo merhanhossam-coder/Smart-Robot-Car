@@ -1,0 +1,203 @@
+[
+    {
+        "id": "39ce3e4f1b5f68e4",
+        "type": "tab",
+        "label": "Login Flow"
+    },
+    {
+        "id": "d0955c7f2b5c02c3",
+        "type": "ui_button",
+        "z": "39ce3e4f1b5f68e4",
+        "name": "Login Button",
+        "group": "ui_group_login",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Login",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "Login",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 190,
+        "y": 340,
+        "wires": [
+            [
+                "9b70fd98508a0c54"
+            ]
+        ]
+    },
+    {
+        "id": "7cb99eea359cec1e",
+        "type": "ui_text_input",
+        "z": "39ce3e4f1b5f68e4",
+        "name": "Username Input",
+        "label": "Username",
+        "tooltip": "",
+        "group": "ui_group_login",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 240,
+        "y": 200,
+        "wires": [
+            [
+                "34d316a3e4778489"
+            ]
+        ]
+    },
+    {
+        "id": "34d316a3e4778489",
+        "type": "function",
+        "z": "39ce3e4f1b5f68e4",
+        "name": "Save Username",
+        "func": "global.set(\"login_username\", msg.payload);\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f3fc9368c48413d3",
+        "type": "function",
+        "z": "39ce3e4f1b5f68e4",
+        "name": "Save Password",
+        "func": "global.set(\"login_password\", msg.payload);\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "836f9b4d2bf88717",
+        "type": "ui_text_input",
+        "z": "39ce3e4f1b5f68e4",
+        "name": "Password Input",
+        "label": "Password",
+        "tooltip": "",
+        "group": "ui_group_login",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "password",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 200,
+        "y": 280,
+        "wires": [
+            [
+                "f3fc9368c48413d3"
+            ]
+        ]
+    },
+    {
+        "id": "9b70fd98508a0c54",
+        "type": "function",
+        "z": "39ce3e4f1b5f68e4",
+        "name": "Check Login",
+        "func": "let username = global.get(\"login_username\") || \"\";\nlet password = global.get(\"login_password\") || \"\";\n\nlet correctUser = \"admin\";\nlet correctPass = \"1234\";\n\n// غير اسم التاب حسب اسم تاب التحكم عندك\nlet controlTabName = \"Smart Robot\";\n\nif (username === correctUser && password === correctPass) {\n    global.set(\"loggedIn\", true);\n\n    let statusMsg = {\n        payload: \"Login successful ✅\"\n    };\n\n    let goToControlTab = {\n    payload: {\n        page: controlTabName\n    }\n};\n\n    node.status({\n        fill: \"green\",\n        shape: \"dot\",\n        text: \"Logged in\"\n    });\n\n    return [statusMsg, goToControlTab];\n} else {\n    global.set(\"loggedIn\", false);\n\n    let statusMsg = {\n        payload: \"Wrong username or password ❌\"\n    };\n\n    node.status({\n        fill: \"red\",\n        shape: \"ring\",\n        text: \"Login failed\"\n    });\n\n    return [statusMsg, null];\n}",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 360,
+        "wires": [
+            [
+                "6ddb5b8bb6c50ab1"
+            ],
+            [
+                "beacc0ae1649c95c"
+            ]
+        ]
+    },
+    {
+        "id": "6ddb5b8bb6c50ab1",
+        "type": "ui_text",
+        "z": "39ce3e4f1b5f68e4",
+        "group": "ui_group_login",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "Login Status",
+        "label": "Login Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 590,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "beacc0ae1649c95c",
+        "type": "ui_ui_control",
+        "z": "39ce3e4f1b5f68e4",
+        "name": "",
+        "events": "all",
+        "x": 600,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ui_group_login",
+        "type": "ui_group",
+        "name": "Login Panel",
+        "tab": "ui_tab_login",
+        "order": 1,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "ui_tab_login",
+        "type": "ui_tab",
+        "name": "Login",
+        "icon": "lock",
+        "disabled": false
+    },
+    {
+        "id": "35de7d2c50789c88",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
